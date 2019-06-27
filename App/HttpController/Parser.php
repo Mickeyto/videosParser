@@ -4,6 +4,7 @@
 namespace App\HttpController;
 
 
+use EasySwoole\EasySwoole\Config;
 use Mickeyto\SVideo\SVideo;
 
 class Parser extends Base
@@ -21,6 +22,9 @@ class Parser extends Base
 
         $svideo = new SVideo();
         $parser = $svideo->parser($parserUri);
+        if($parser->_domain == 'Weibo'){
+            $parser->setHeader('Cookie', Config::getInstance()->getConf('custom_header.weibo_cookie'));
+        }
         $parser->fetch();
 
         $playlist = $parser->playlist();
