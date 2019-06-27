@@ -1,6 +1,6 @@
 # videosParser
 ```
-git https://github.com/Mickeyto/videosParser.git
+git clone https://github.com/Mickeyto/videosParser.git
 composer install
 
 php vendor/bin/easyswoole install
