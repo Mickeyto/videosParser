@@ -26,10 +26,39 @@ class Parser extends Base
             $parser->setHeader('Cookie', Config::getInstance()->getConf('custom_header.weibo_cookie'));
         }
         $parser->fetch();
-
         $playlist = $parser->playlist();
+        $playlist = $this->filterPlaylist($parser->_domain, 'mp4', $playlist);
 
         return $this->writeJson(200, $playlist);
+    }
+
+    private function pornhub(string $format, array $data)
+    {
+        $playlist = [
+            'title'  => $data['title'],
+            'playlist' => [],
+        ];
+        foreach($data['playlist'] as $row){
+            if($row['format'] == $format){
+                $playlist['playlist'][] = $row;
+            }
+        }
+
+    }
+
+    private function filterPlaylist(string $domain, string $format, array $data):array
+    {
+        $playlist = [];
+        switch ($domain){
+            case 'Pornhub':
+                $playlist = $this->pornhub($format, $data);
+                break;
+            default:
+                $playlist = &$data;
+                break;
+        }
+
+        return $playlist;
     }
 
     private function error($status=400, $msg='')
