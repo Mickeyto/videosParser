@@ -25,7 +25,7 @@ class Base extends Controller
 
     protected function onException(\Throwable $throwable): void
     {
-        $this->write(400, '', $throwable->getMessage());
+        $this->write(400, '', '解析失败');
     }
 
 }

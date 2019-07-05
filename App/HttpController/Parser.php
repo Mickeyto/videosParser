@@ -44,6 +44,7 @@ class Parser extends Base
             }
         }
 
+        return $playlist;
     }
 
     private function filterPlaylist(string $domain, string $format, array $data):array
