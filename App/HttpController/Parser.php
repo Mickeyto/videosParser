@@ -23,6 +23,7 @@ class Parser extends Base
         $svideo = new SVideo();
         $parser = $svideo->parser($parserUri);
         if($parser->_domain == 'Weibo'){
+            $parser->requestUrl = $parserUri . '&blog_mid=' . $this->request()->getQueryParam('blog_mid');;
             $parser->setHeader('Cookie', Config::getInstance()->getConf('custom_header.weibo_cookie'));
         }
         $parser->fetch();
