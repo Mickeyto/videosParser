@@ -18,7 +18,11 @@ class Parser extends Base
     {
         $parserUri = $this->request()->getQueryParam('uri');
         if(empty($parserUri)){
-            $ip = ServerManager::getInstance()->getSwooleServer()->connection_info($this->request()->getSwooleRequest()->fd);
+            $ipInfo = ServerManager::getInstance()->getSwooleServer()->connection_info($this->request()->getSwooleRequest()->fd);
+            $xri = $this->request()->getHeader('x-real-ip');
+
+            $ip = $ipInfo['remote_ip'];
+            $ip = !empty($xri) ? $xri[0] : $ip;
             return $this->error(400, $ip);
         }
 
