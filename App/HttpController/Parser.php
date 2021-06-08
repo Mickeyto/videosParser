@@ -5,6 +5,7 @@ namespace App\HttpController;
 
 
 use EasySwoole\EasySwoole\Config;
+use EasySwoole\EasySwoole\ServerManager;
 use Mickeyto\SVideo\SVideo;
 
 class Parser extends Base
@@ -17,7 +18,8 @@ class Parser extends Base
     {
         $parserUri = $this->request()->getQueryParam('uri');
         if(empty($parserUri)){
-            return $this->error();
+            $ip = ServerManager::getInstance()->getSwooleServer()->connection_info($this->request()->getSwooleRequest()->fd);
+            return $this->error(400, $ip);
         }
 
         $svideo = new SVideo();

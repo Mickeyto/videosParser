@@ -4,7 +4,6 @@
 namespace App\HttpController;
 
 
-use EasySwoole\EasySwoole\ServerManager;
 use EasySwoole\Http\AbstractInterface\AbstractRouter;
 use EasySwoole\Http\Request;
 use EasySwoole\Http\Response;
@@ -18,10 +17,8 @@ class Router extends AbstractRouter
 
         // TODO: Implement initialize() method.
         $this->setMethodNotAllowCallBack(function (Request $request,Response $response){
-            $ip = ServerManager::getInstance()->getSwooleServer()->connection_info($request->getSwooleRequest()->fd);
-
             $response->withStatus(404);
-            $response->write('404：'. $ip);
+            $response->write('404');
             return false;//结束此次响应
         });
         $this->setRouterNotFoundCallBack(function (Request $request,Response $response){
